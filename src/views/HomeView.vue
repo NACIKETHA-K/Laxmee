@@ -173,11 +173,12 @@ export default {
   }
 
   .shopnow {
-    top: -30%;
+    top: -21%;
     font-size: 12px;
   }
 
   .collection {
+    margin-top: -11px;
     font-size: 11px;
     padding: 5px 12px;
   }
