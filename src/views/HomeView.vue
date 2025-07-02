@@ -140,12 +140,13 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .carousel-item {
-    height: 80vh;
-  }
+
 
   .foreground-video {
     width: 90%;
+    min-height: 60vh;
+    object-fit: cover;
+  
     max-height: 60vh;
     border-radius: 20px;
   }
@@ -163,17 +164,17 @@ export default {
 }
 
 @media (max-width: 480px) {
-  .carousel-item {
-    height: 70vh;
-  }
+
 
   .foreground-video {
     width: 95%;
+      min-height: 45vh;
+    object-fit: cover;
     max-height: 50vh;
   }
 
   .shopnow {
-    top: -21%;
+    top: -27%;
     font-size: 12px;
   }
 
