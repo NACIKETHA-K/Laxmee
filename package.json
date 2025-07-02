@@ -1,0 +1,24 @@
+{
+  "name": "project4",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://naciketha-k.github.io/Laxmee/",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "mit": "^0.1.3",
+    "mitt": "^3.0.1",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "gh-pages": "^6.3.0"
+  }
+}
