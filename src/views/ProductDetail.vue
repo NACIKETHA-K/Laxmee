@@ -35,24 +35,27 @@
           :class="{ 'border border-dark': selectedColor === color }"
           @click="selectedColor = color"
         ></button>
+
         <hr />
 
         <div class="my-3 mx-auto d-flex flex-column">
-          <p class="mb-2">Find Your Size:</p>
+          <p class="mb-2" :class="{ 'text-danger': sizeError }">
+            {{ sizeError ? 'Please select a size' : 'Find Your Size:' }}
+          </p>
           <div class="d-flex mx-auto gap-4 mt-5">
             <button
               v-for="size in sizes"
               :key="size"
               class="btn size-btn mx-auto mb-4"
               :class="{ active: selectedSize === size }"
-              @click="selectedSize = size"
+              @click="selectedSize = size; sizeError = false"
             >
               {{ size }}
             </button>
           </div>
 
           <button class="btn text-white bag-btn" @click="addToCart">Add to Bag</button>
-          <div class="tax">Up to 2x of R$224.50 interest-free</div>
+          <div class="tax">Up to 2x of R${{ (product.price / 2).toFixed(2) }} interest-free</div>
         </div>
       </div>
     </div>
@@ -73,6 +76,7 @@ const product = ref(null)
 
 const selectedSize = ref(null)
 const selectedColor = ref(null)
+const sizeError = ref(false)
 
 const sizes = ['S', 'M', 'L', 'XL']
 const colors = ['black', 'beige', 'navy']
@@ -91,10 +95,16 @@ const shortText = fullText.slice(0, 70) + '...'
 const showFull = ref(false)
 
 const addToCart = () => {
-  if (!selectedSize.value || !selectedColor.value) {
-    alert('Please select size and color before adding to cart.')
+  if (!selectedSize.value) {
+    sizeError.value = true
     return
   }
+
+  // Auto-set default color if not selected
+  if (!selectedColor.value) {
+    selectedColor.value = colors[0] // default to 'black'
+  }
+
   const cart = JSON.parse(localStorage.getItem('cart')) || []
   const itemToAdd = {
     ...product.value,
@@ -156,13 +166,11 @@ const addToCart = () => {
 .description {
   font-family: poppins;
 }
-
 .fullproduct {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
-
 .image-row {
   display: flex;
   justify-content: center;
@@ -170,14 +178,12 @@ const addToCart = () => {
   height: 100vh;
   position: relative;
 }
-
 .product-image {
   width: 33.3%;
   height: 100%;
   object-fit: cover;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 .cartbuy {
   position: absolute;
   top: 50%;
@@ -189,30 +195,25 @@ const addToCart = () => {
   min-height: 60%;
   max-height: 60%;
 }
-
 button.active {
   background-color: rgb(54, 53, 53) !important;
   color: white !important;
 }
-
 /* ✅ Responsive Styles */
 @media (max-width: 768px) {
   .image-row {
     flex-direction: column;
     height: auto;
   }
-
   .product-image {
     display: none;
   }
-
   .product-image:nth-child(2) {
     display: block;
     width: 100%;
     height: auto;
     object-fit: cover;
   }
-
   .cartbuy {
     position: static;
     transform: none;
@@ -220,31 +221,25 @@ button.active {
     width: 100%;
     max-height: none;
   }
-
   .readmore {
     width: 100%;
   }
-
   .description,
   .selection {
     width: 100%;
   }
-
   .size-btn {
     width: 40px;
     height: 40px;
   }
-
   .color-btn {
     height: 28px;
     width: 28px;
   }
-
   .btn.bag-btn {
     width: 100%;
     font-weight: 500;
   }
-
   .tax {
     font-size: 12px;
   }

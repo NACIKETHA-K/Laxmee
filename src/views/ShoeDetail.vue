@@ -5,6 +5,7 @@
       <img :src="product.url2" class="product-image" alt="Product Image" />
       <img :src="product.url3" class="product-image" alt="Product Image" />
     </div>
+
     <div class="cartbuy">
       <div class="description p-3">
         <div class="rate d-flex justify-content-between fs-6 mb-4 pop-font">
@@ -41,16 +42,16 @@
         <hr />
 
         <div class="my-3 mx-auto d-flex flex-column">
-          <p class="mb-2">Select Your Size:</p>
-          <div
-            class="d-flex mx-auto gap-4 mt-4 flex-wrap justify-content-center"
-          >
+          <p class="mb-2" :class="{ 'text-danger': sizeError }">
+            {{ sizeError ? 'Please select a size' : 'Select Your Size:' }}
+          </p>
+          <div class="d-flex mx-auto gap-4 mt-4 flex-wrap justify-content-center">
             <button
               v-for="size in sizes"
               :key="size"
               class="btn size-btn mx-2 mb-2"
               :class="{ active: selectedSize === size }"
-              @click="selectedSize = size"
+              @click="selectedSize = size; sizeError = false"
             >
               {{ size }}
             </button>
@@ -75,16 +76,19 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import emitter from '../event-bus' 
+import emitter from '../event-bus'
 
 const route = useRoute()
 const product = ref(null)
 
 const selectedSize = ref(null)
 const selectedColor = ref(null)
+const sizeError = ref(false)
 
 const sizes = [6, 7, 8, 9, 10]
 const colors = ['black', 'white', 'blue', 'grey']
+
+// Sample Products (use your own from notepad if needed)
 const exampleProducts = [
   {
     id: 1,
@@ -154,6 +158,7 @@ const exampleProducts = [
     url3: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/0f2e9d53-8da9-4074-9ba7-96fb00667354/JR+SUPERFLY+10+CLUB+FG%2FMG.png',
   },
 
+
 ]
 
 onMounted(() => {
@@ -167,10 +172,16 @@ const shortText = fullText.slice(0, 70) + '...'
 const showFull = ref(false)
 
 const addToCart = () => {
-  if (!selectedSize.value || !selectedColor.value) {
-    alert('⚠️ Please select size and color before adding to cart.')
+  if (!selectedSize.value) {
+    sizeError.value = true
     return
   }
+
+  // Auto-set default color if not chosen
+  if (!selectedColor.value) {
+    selectedColor.value = colors[0] // default to 'black'
+  }
+
   const cart = JSON.parse(localStorage.getItem('cart')) || []
   const itemToAdd = {
     ...product.value,
@@ -179,8 +190,7 @@ const addToCart = () => {
   }
   cart.push(itemToAdd)
   localStorage.setItem('cart', JSON.stringify(cart))
-  emitter.emit('custom-message', 1) 
-  alert('✅ Shoe added to cart!')
+  emitter.emit('custom-message', 1)
 }
 </script>
 
@@ -301,6 +311,4 @@ const addToCart = () => {
     margin-top: 20px;
   }
 }
-
-
 </style>

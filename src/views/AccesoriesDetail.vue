@@ -5,6 +5,7 @@
       <img :src="product.url2" class="product-image" alt="Product Image" />
       <img :src="product.url3 || product.url2" class="product-image" alt="Product Image" />
     </div>
+
     <div class="cartbuy">
       <div class="description p-3">
         <div class="rate d-flex justify-content-between fs-6 mb-4 pop-font">
@@ -26,17 +27,26 @@
       </div>
 
       <div class="selection p-3 mt-2">
-        <div class="title">
-          <div class="colors fs-6">Color</div>
+        <div class="title mb-2">
+          <div class="colors fs-6">Material</div>
         </div>
-        <button
-          v-for="color in colors"
-          :key="color"
-          class="btn m-1 color-btn p-2"
-          :style="{ backgroundColor: color.toLowerCase(), color: 'white' }"
-          :class="{ 'border border-dark': selectedColor === color }"
-          @click="selectedColor = color"
-        ></button>
+
+        <div class="d-flex gap-2 flex-wrap">
+          <button
+            v-for="color in colors"
+            :key="color.name"
+            class="color-btn"
+            :style="{ backgroundColor: color.hex }"
+            :class="{ 'border border-dark': selectedColor === color.name }"
+            @click="selectColor(color.name)"
+            :title="color.name"
+          ></button>
+        </div>
+
+        <!-- Red warning -->
+        <p v-if="showWarning" class="text-danger mt-2" style="font-size: 14px;">
+          ⚠️ Please select material
+        </p>
 
         <hr />
 
@@ -61,7 +71,13 @@ import emitter from '../event-bus'
 
 const product = ref(null)
 const selectedColor = ref(null)
-const colors = ['black', 'white', 'blue', 'grey']
+const showWarning = ref(false)
+
+const colors = [
+  { name: 'Gold', hex: '#FFD700' },
+  { name: 'Platinum', hex: '#E5E4E2' },
+  { name: 'Diamond', hex: '#B9F2FF' }
+]
 
 const showFull = ref(false)
 const fullText =
@@ -75,11 +91,17 @@ onMounted(() => {
   }
 })
 
+const selectColor = (color) => {
+  selectedColor.value = color
+  showWarning.value = false
+}
+
 const addToCart = () => {
   if (!selectedColor.value) {
-    alert('⚠️ Please select a color before adding to cart.')
+    showWarning.value = true
     return
   }
+
   const cart = JSON.parse(localStorage.getItem('cart')) || []
   const itemToAdd = {
     ...product.value,
@@ -88,7 +110,6 @@ const addToCart = () => {
   cart.push(itemToAdd)
   localStorage.setItem('cart', JSON.stringify(cart))
   emitter.emit('custom-message', 1)
-  alert('✅ Accessory added to cart!')
 }
 </script>
 
@@ -152,8 +173,18 @@ const addToCart = () => {
 }
 
 .color-btn {
-  border-radius: 10px;
-  border: 1px solid white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  padding: 0;
+}
+
+.color-btn:hover {
+  transform: scale(1.1);
+  border-color: #333;
 }
 
 .bag-btn {
@@ -165,6 +196,7 @@ const addToCart = () => {
   font-size: 12px;
   text-align: center;
 }
+
 @media (max-width: 991px) {
   .image-row {
     height: auto;
@@ -190,5 +222,4 @@ const addToCart = () => {
     margin-top: 20px;
   }
 }
-
 </style>
