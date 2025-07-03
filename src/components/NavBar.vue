@@ -27,53 +27,57 @@
     </div>
 
     <!-- ✅ Mobile View -->
-    <div class="mobile-wrapper d-flex d-md-none  align-items-center justify-content-center position-relative">
+    <div class="mobile-wrapper d-flex d-md-none align-items-center justify-content-center position-relative">
       <!-- Brand circle outside left -->
-      <div class="outside-logo ps-2 ">
-        <div class="circle-logo text-uppercase ">Laxmee</div>
+      <div class="outside-logo ps-2">
+        <div class="circle-logo text-uppercase">Laxmee</div>
       </div>
 
       <!-- Mobile navbar pill -->
-      <div class="mobile-navbar ms-2 d-flex justify-content-between align-items-center px-3 py-2 ">
+      <div class="mobile-navbar ms-2 d-flex justify-content-between align-items-center px-3 py-2">
         <div class="d-flex align-items-center gap-3">
           <div class="menu-text f-bold" @click="toggleSidebar">Menu</div>
         </div>
 
         <!-- Icons -->
-         
         <div class="d-flex gap-3 align-items-center">
-          <div class="mb-searchcontainer d-flex  gap-2">
+          <div class="mb-searchcontainer d-flex gap-2">
             <div class="mb-search">search</div>
-          
-          <i class="fa-solid fa-magnifying-glass fs-6 my-auto"></i>
-
+            <i class="fa-solid fa-magnifying-glass fs-6 my-auto"></i>
           </div>
-          
           <router-link to="/cart" class="bagbox1 d-flex align-items-center position-relative">
             <i class="fa-solid fa-bag-shopping me-1"></i>
-
-            
           </router-link>
         </div>
       </div>
     </div>
 
-    <!-- Mobile Sidebar -->
-    <div class="mob-sidebar" :class="{ show: sidebarOpen }">
+    <!-- ✅ Glassmorphic Mobile Sidebar -->
+    <div class="mob-sidebar glass-sidebar" :class="{ show: sidebarOpen }">
       <div class="sidebar-header d-flex justify-content-between px-3 py-2">
         <span class="fs-5 f-bold">Menu</span>
         <i class="fa-solid fa-xmark fs-4" @click="toggleSidebar"></i>
       </div>
+
       <div class="sidebar-links d-flex flex-column px-3">
         <router-link
           v-for="items in navboxitem"
           :key="items.id"
           :to="items.link"
-          class="linkstyle py-2"
+          class="linkstyle py-2 fw-bold d-flex justify-content-between align-items-center"
           @click="toggleSidebar"
         >
           {{ items.content }}
+          <i class="fa-solid fa-chevron-right fs-7"></i>
         </router-link>
+
+        <hr class="my-2" />
+
+        <div class="text-muted fw-semibold mb-2">More</div>
+
+        <router-link to="/account" class="linkstyle py-2" @click="toggleSidebar">My Account</router-link>
+        <router-link to="/orders" class="linkstyle py-2" @click="toggleSidebar">My Orders</router-link>
+        <router-link to="/wishlist" class="linkstyle py-2" @click="toggleSidebar">Wishlist</router-link>
       </div>
     </div>
 
@@ -188,7 +192,7 @@ export default {
   width: 270px;
 }
 
-/* ✅ Mobile Brand Circle */
+/* ✅ Mobile */
 .mobile-wrapper {
   position: relative;
   width: 100%;
@@ -199,8 +203,6 @@ export default {
 .outside-logo {
   position: absolute;
   left: 0;
-
-
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
@@ -224,7 +226,6 @@ export default {
   line-height: 1.2;
 }
 
-/* ✅ Mobile Navbar Styles */
 .mobile-navbar {
   background: rgba(255, 255, 255, 0.616);
   border-radius: 50px;
@@ -241,16 +242,19 @@ export default {
   cursor: pointer;
 }
 
-/* ✅ Sidebar for Mobile */
+/* ✅ Glass Sidebar */
 .mob-sidebar {
   position: fixed;
   top: 0;
-  left: -260px;
-  width: 240px;
+  left: -60%;
+  width: 50%;
   height: 100vh;
-  background: white;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 2000;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease-in-out;
   font-family: 'Poppins', sans-serif;
 }
@@ -264,9 +268,26 @@ export default {
 }
 
 .sidebar-links .linkstyle {
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 0;
   font-weight: 500;
+  color: black;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-links .text-muted {
+  font-size: 13px;
+  color: gray;
+}
+
+.sidebar-links .fw-bold {
+  font-weight: 600;
+}
+
+.sidebar-links i.fa-chevron-right {
+  font-size: 10px;
+  color: #999;
 }
 
 .overlay {

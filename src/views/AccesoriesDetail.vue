@@ -165,4 +165,30 @@ const addToCart = () => {
   font-size: 12px;
   text-align: center;
 }
+@media (max-width: 991px) {
+  .image-row {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .product-image {
+    display: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .product-image:nth-child(2) {
+    display: block;
+  }
+
+  .cartbuy {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-height: none;
+    padding: 1rem;
+    margin-top: 20px;
+  }
+}
+
 </style>

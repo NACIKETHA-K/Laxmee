@@ -7,67 +7,54 @@
     </div>
 
     <div class="cartbuy" style="font-family: poppins;">
-      <div class="description p-3 ">
+      <div class="description p-3">
         <div class="rate d-flex justify-content-between fs-6 mb-4 pop-font">
           <div>{{ product.name }}</div>
-        <div class="">R${{ product.price }}</div>
-
+          <div>R${{ product.price }}</div>
         </div>
+
         <div class="readmore d-flex w-100">
-           <div class="text-muted read ">
-        {{ showFull ? fullText : shortText }}
-
-      </div>
-              <button class="btn  bg-white p-0 ms-1 readalign mt-4" @click="showFull = !showFull">
-          {{ showFull ? 'Read Less' : 'Read More' }}
-        </button>
+          <div class="text-muted read">
+            {{ showFull ? fullText : shortText }}
+          </div>
+          <button class="btn bg-white p-0 ms-1 readalign mt-4" @click="showFull = !showFull">
+            {{ showFull ? 'Read Less' : 'Read More' }}
+          </button>
         </div>
-       
-
-
       </div>
-     
+
       <div class="selection p-3 mt-2">
         <div class="title">
           <div class="colors fs-6">Color</div>
         </div>
-         <button
+        <button
           v-for="color in colors"
           :key="color"
           class="btn m-1 color-btn p-2"
           :style="{ backgroundColor: color.toLowerCase(), color: 'white' }"
           :class="{ 'border border-dark': selectedColor === color }"
           @click="selectedColor = color"
-        >
-        </button>
-        <hr>
-        <div class=" my-3 mx-auto  d-flex flex-column">
-        <p class="mb-2">Find Your Size:</p>
-        <div class="d-flex mx-auto gap-4 mt-5 ">
-                  <button
-          v-for="size in sizes"
-          :key="size"
-          class="btn size-btn mx-auto mb-4 "
-          :class="{ active: selectedSize === size }"
-          @click="selectedSize = size"
-        >
-          {{ size }}
-        </button>
-       
+        ></button>
+        <hr />
 
+        <div class="my-3 mx-auto d-flex flex-column">
+          <p class="mb-2">Find Your Size:</p>
+          <div class="d-flex mx-auto gap-4 mt-5">
+            <button
+              v-for="size in sizes"
+              :key="size"
+              class="btn size-btn mx-auto mb-4"
+              :class="{ active: selectedSize === size }"
+              @click="selectedSize = size"
+            >
+              {{ size }}
+            </button>
+          </div>
+
+          <button class="btn text-white bag-btn" @click="addToCart">Add to Bag</button>
+          <div class="tax">Up to 2x of R$224.50 interest-free</div>
         </div>
-         <button class="btn text-white bag-btn" @click="addToCart">Add to Bag</button>
-         <div class="tax">Up to 2x of R$224.50 interest-free</div>
-        
-
-
       </div>
-      </div>
-      <!-- Cart Buttons -->
-      <!-- <button class="btn btn-success" @click="buyNow">Buy Now</button> -->
-      <!-- <div class="text-center">
-        <router-link to="/about" class="btn btn-dark mt-4">← Back to Products</router-link>
-      </div> -->
     </div>
   </div>
 
@@ -78,18 +65,17 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import emitter from '../event-bus'
 
 const route = useRoute()
-const router = useRouter()
 const product = ref(null)
 
 const selectedSize = ref(null)
 const selectedColor = ref(null)
 
-const sizes = ['S', 'M', 'L','XL']
-const colors = ['black', 'beige', 'navy',]
+const sizes = ['S', 'M', 'L', 'XL']
+const colors = ['black', 'beige', 'navy']
 
 onMounted(() => {
   const id = parseInt(route.params.id)
@@ -98,7 +84,9 @@ onMounted(() => {
     product.value = fromLocal
   }
 })
-const fullText = "Shirt with a fitted design, adjusted to the body. Light cotton fabric with elastane, for comfort. Washed and softened garment."
+
+const fullText =
+  'Shirt with a fitted design, adjusted to the body. Light cotton fabric with elastane, for comfort. Washed and softened garment.'
 const shortText = fullText.slice(0, 70) + '...'
 const showFull = ref(false)
 
@@ -117,66 +105,55 @@ const addToCart = () => {
   localStorage.setItem('cart', JSON.stringify(cart))
   emitter.emit('custom-message', 1)
 }
-
-/*const buyNow = () => {
-  if (!selectedSize.value || !selectedColor.value) {
-    alert('Please select size and color before proceeding to buy.')
-    return
-  }
-  router.push({ name: 'payment', params: { id: product.value.id } })
-}*/
 </script>
 
 <style scoped>
-.readalign{
+.readalign {
   font-size: 12px;
   font-weight: 200;
   height: 20px;
   width: 90px;
-  border-radius:3px ;
+  border-radius: 3px;
 }
-.readmore{
+.readmore {
   width: 270px;
 }
-.bag-btn{
+.bag-btn {
   background-color: rgb(54, 53, 53);
-
 }
-.tax{
-  margin-top:8px ;
-  font-size:12px ;
-
+.tax {
+  margin-top: 8px;
+  font-size: 12px;
   text-align: center;
 }
-.size-btn{
+.size-btn {
   font-size: 14px;
   font-weight: 450;
-
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  background-color:white ;
+  background-color: white;
 }
-.color-btn{
+.color-btn {
   border-radius: 10px;
   border: 1px solid white;
-
 }
-.read{
+.read {
   font-size: 13px;
 }
-.description,.selection{
-  border-radius:10px ;
-   background: rgba(255, 255, 255, 0.719);
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 10px );
--webkit-backdrop-filter: blur( 20px );
+.description,
+.selection {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.719);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(20px);
 }
-.pop-font{
+.pop-font {
   font-family: poppins;
   font-weight: 500;
 }
-.description{
+.description {
   font-family: poppins;
 }
 
@@ -213,16 +190,63 @@ backdrop-filter: blur( 10px );
   max-height: 60%;
 }
 
-.btn-link {
-  color: #007bff;
-  text-decoration: underline;
-  cursor: pointer;
-  background: none;
-  border: none;
+button.active {
+  background-color: rgb(54, 53, 53) !important;
+  color: white !important;
 }
 
-button.active {
-  background-color:rgb(54, 53, 53) !important;
-  color: white !important;
+/* ✅ Responsive Styles */
+@media (max-width: 768px) {
+  .image-row {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .product-image {
+    display: none;
+  }
+
+  .product-image:nth-child(2) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .cartbuy {
+    position: static;
+    transform: none;
+    padding: 1.5rem 1rem;
+    width: 100%;
+    max-height: none;
+  }
+
+  .readmore {
+    width: 100%;
+  }
+
+  .description,
+  .selection {
+    width: 100%;
+  }
+
+  .size-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .color-btn {
+    height: 28px;
+    width: 28px;
+  }
+
+  .btn.bag-btn {
+    width: 100%;
+    font-weight: 500;
+  }
+
+  .tax {
+    font-size: 12px;
+  }
 }
 </style>
