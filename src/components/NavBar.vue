@@ -1,11 +1,8 @@
 <template>
   <nav class="navbar">
-    <div class="reactbox d-flex space-between mx-auto mt-3 rounded">
-      <div class="hamburger d-md-none px-3" @click="toggleSidebar">
-        <i class="fa-solid fa-bars fs-4"></i>
-      </div>
-
-      <div class="fullbox d-none d-md-flex rounded px-3">
+    <!-- ✅ Desktop View -->
+    <div class="reactbox d-none d-md-flex space-between mx-auto mt-3 rounded">
+      <div class="fullbox d-flex rounded px-3">
         <div class="innerbox rounded px-2 my-auto" v-for="items in navboxitem" :key="items.id">
           <router-link :to="items.link" class="linkstyle fs-8" style="padding: 0px; font-size: 15px;">{{ items.content }}</router-link>
         </div>
@@ -15,19 +12,53 @@
 
       <div class="endbox d-flex gap-2 mx-4">
         <div class="searchgroup py-auto rounded d-none d-sm-flex">
-          <input type="search" class="searchbox muted my-auto ms-2" placeholder="Search" >
-          <i class="fa-solid fa-magnifying-glass fs-8 my-auto " style="margin-right: 10px;"></i>
+          <input type="search" class="searchbox muted my-auto ms-2" placeholder="Search">
+          <i class="fa-solid fa-magnifying-glass fs-8 my-auto" style="margin-right: 10px;"></i>
         </div>
-        <div class="usericon px-3 rounded "><i class="fa-regular fa-user my-auto py-auto"></i></div>
-        <div class="saveicon px-3 rounded "><i class="fa-regular fa-bookmark my-auto py-auto"></i></div>
+        <div class="usericon px-3 rounded"><i class="fa-regular fa-user my-auto py-auto"></i></div>
+        <div class="saveicon px-3 rounded"><i class="fa-regular fa-bookmark my-auto py-auto"></i></div>
         <div class="bagbox px-3 rounded py-auto">
           <router-link to="/cart" class="bagbox1 d-flex">
             <div>Bag</div>
-            <div class="countbox my-auto ">{{ count }}</div>
+            <div class="countbox my-auto">{{ count }}</div>
           </router-link>
         </div>
       </div>
     </div>
+
+    <!-- ✅ Mobile View -->
+    <div class="mobile-wrapper d-flex d-md-none  align-items-center justify-content-center position-relative">
+      <!-- Brand circle outside left -->
+      <div class="outside-logo ps-2 ">
+        <div class="circle-logo text-uppercase ">Laxmee</div>
+      </div>
+
+      <!-- Mobile navbar pill -->
+      <div class="mobile-navbar ms-2 d-flex justify-content-between align-items-center px-3 py-2 ">
+        <div class="d-flex align-items-center gap-3">
+          <div class="menu-text f-bold" @click="toggleSidebar">Menu</div>
+        </div>
+
+        <!-- Icons -->
+         
+        <div class="d-flex gap-3 align-items-center">
+          <div class="mb-searchcontainer d-flex  gap-2">
+            <div class="mb-search">search</div>
+          
+          <i class="fa-solid fa-magnifying-glass fs-6 my-auto"></i>
+
+          </div>
+          
+          <router-link to="/cart" class="bagbox1 d-flex align-items-center position-relative">
+            <i class="fa-solid fa-bag-shopping me-1"></i>
+
+            
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Sidebar -->
     <div class="mob-sidebar" :class="{ show: sidebarOpen }">
       <div class="sidebar-header d-flex justify-content-between px-3 py-2">
         <span class="fs-5 f-bold">Menu</span>
@@ -45,6 +76,7 @@
         </router-link>
       </div>
     </div>
+
     <div v-if="sidebarOpen" class="overlay" @click="toggleSidebar"></div>
   </nav>
 </template>
@@ -82,7 +114,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Jaro:opsz@6..72&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 .navbar {
   z-index: 40;
@@ -90,16 +122,18 @@ export default {
   position: fixed;
 }
 
+.reactbox {
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .countbox {
   font-weight: 500;
-  margin-top: 3px;
-  padding: 1px;
-  border-radius: 50%;
+  padding: 2px 6px;
+  border-radius: 12px;
   text-align: center;
-  width: 18px;
-  margin-left: 4px;
-  font-size: 10px;
-  text-decoration: none;
+  font-size: 11px;
   background-color: rgba(128, 128, 128, 0.258);
 }
 
@@ -109,53 +143,39 @@ export default {
   color: black;
 }
 
-.reactbox {
-  width: 98%;
-  display: flex;
-  justify-content: space-between;
-}
-
 .fullbox {
   background: rgba(255, 255, 255, 0.616);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
-  padding: 0;
   height: 28px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .innerbox {
-  font-family: poppins;
+  font-family: 'Poppins', sans-serif;
 }
 
 .brandname {
-  z-index: 10;
-  font-family: poppins;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 4px;
+  font-weight: bold;
 }
 
 .innerbox:hover {
   background: rgb(242, 242, 242);
   cursor: pointer;
-  backdrop-filter: blur(20px);
 }
 
-.reactbox:hover {
-  background: rgba(255, 255, 255, 0.772);
-  backdrop-filter: blur(20px);
-  transition: 0.6s;
-}
-
-.searchgroup, .usericon, .saveicon, .bagbox {
+.endbox .searchgroup,
+.usericon,
+.saveicon,
+.bagbox {
   background: rgba(255, 255, 255, 0.616);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  font-family: poppins;
 }
 
 .searchbox {
@@ -164,36 +184,75 @@ export default {
   outline: 0;
   background: transparent;
 }
-.searchbox:hover{
+.searchbox:hover {
   width: 270px;
-
-  
 }
 
-/* New Sidebar Styles for Mobile */
-.hamburger {
-  display: none;
+/* ✅ Mobile Brand Circle */
+.mobile-wrapper {
+  position: relative;
+  width: 100%;
+  padding-left: 48px;
+  margin-top: 12px;
+}
+
+.outside-logo {
+  position: absolute;
+  left: 0;
+
+
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.circle-logo {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.616);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 6px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ✅ Mobile Navbar Styles */
+.mobile-navbar {
+  background: rgba(255, 255, 255, 0.616);
+  border-radius: 50px;
+  max-width: 450px;
+  width: 94%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.menu-text {
+  font-weight: 500;
+  font-family: poppins;
+  font-size: 15px;
   cursor: pointer;
 }
 
-@media (max-width: 868px) {
-  .hamburger {
-    display: block;
-  }
-}
-
+/* ✅ Sidebar for Mobile */
 .mob-sidebar {
   position: fixed;
   top: 0;
   left: -260px;
   width: 240px;
-  height: 50vh;
-  background: transparent;
-  backdrop-filter: blur;
+  height: 100vh;
+  background: white;
   z-index: 2000;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease-in-out;
-  font-family: poppins;
+  font-family: 'Poppins', sans-serif;
 }
 
 .mob-sidebar.show {
@@ -210,7 +269,6 @@ export default {
   font-weight: 500;
 }
 
-/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
