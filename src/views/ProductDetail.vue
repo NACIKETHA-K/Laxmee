@@ -24,17 +24,20 @@
       </div>
 
       <div class="selection p-3 mt-2">
-        <div class="title">
+        <div class="title mb-2">
           <div class="colors fs-6">Color</div>
         </div>
-        <button
-          v-for="color in colors"
-          :key="color"
-          class="btn m-1 color-btn p-2"
-          :style="{ backgroundColor: color.toLowerCase(), color: 'white' }"
-          :class="{ 'border border-dark': selectedColor === color }"
-          @click="selectedColor = color"
-        ></button>
+        <div class="d-flex flex-wrap gap-2">
+          <button
+            v-for="color in colors"
+            :key="color.name"
+            class="color-btn"
+            :style="{ backgroundColor: color.hex }"
+            :class="{ 'border border-dark': selectedColor === color.name }"
+            @click="selectedColor = color.name"
+            :title="color.name"
+          ></button>
+        </div>
 
         <hr />
 
@@ -79,7 +82,14 @@ const selectedColor = ref(null)
 const sizeError = ref(false)
 
 const sizes = ['S', 'M', 'L', 'XL']
-const colors = ['black', 'beige', 'navy']
+
+const colors = [
+  { name: 'White', hex: '#ffffff' },
+  { name: 'Olive Green', hex: '#708238' },
+  { name: 'Black', hex: '#000000' },
+  { name: 'Sky Blue', hex: '#87CEEB' },
+  { name: 'Brown', hex: '#8B4513' },
+]
 
 onMounted(() => {
   const id = parseInt(route.params.id)
@@ -100,9 +110,8 @@ const addToCart = () => {
     return
   }
 
-  // Auto-set default color if not selected
   if (!selectedColor.value) {
-    selectedColor.value = colors[0] // default to 'black'
+    selectedColor.value = colors[0].name
   }
 
   const cart = JSON.parse(localStorage.getItem('cart')) || []
@@ -145,8 +154,16 @@ const addToCart = () => {
   background-color: white;
 }
 .color-btn {
-  border-radius: 10px;
-  border: 1px solid white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  padding: 0;
+}
+.color-btn:hover {
+  transform: scale(1.1);
 }
 .read {
   font-size: 13px;
@@ -233,8 +250,8 @@ button.active {
     height: 40px;
   }
   .color-btn {
-    height: 28px;
-    width: 28px;
+    height: 20px;
+    width: 20px;
   }
   .btn.bag-btn {
     width: 100%;
