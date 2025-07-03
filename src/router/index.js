@@ -50,7 +50,7 @@ const routes = [
   },
   {
     path: '/payment-success',
-    name: 'PaymentPage',
+    name: 'payment-success',
     component: () => import('../views/PaymentPage.vue')
   },
   {
