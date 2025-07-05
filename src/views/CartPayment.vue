@@ -120,7 +120,7 @@
                     <div class="d-flex align-items-center mb-3">
                       <img src="https://img.icons8.com/color/512/bhim.png" alt="UPI Logo" class="upi-logo me-2">
                       <h6 class="mb-0">Pay through UPI QR Code</h6>
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-Vector.svg/1200px-UPI-Logo-Vector.svg.png" alt="BHIM UPI" class="ms-auto upi-header-logo">
+                      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/65/BHIM_SVG_Logo.svg/500px-BHIM_SVG_Logo.svg.png" alt="BHIM UPI" class="ms-auto upi-header-logo">
                     </div>
                     <div class="row align-items-center">
                       <div class="col-auto">
@@ -279,6 +279,7 @@ const cancelPayment = () => {
 .payment-page-container {
   min-height: 100vh;
   display: flex;
+  font-family: poppins;
   flex-direction: column;
   background-color: #f8f9fa;
 }
@@ -397,7 +398,7 @@ const cancelPayment = () => {
 }
 
 .card-types .card-logo {
-  height: 20px;
+  height: 15px;
   margin-left: 5px;
 }
 
@@ -493,12 +494,12 @@ const cancelPayment = () => {
 }
 
 .powered-by img.hdfc-logo {
-  height: 30px;
+  height: 20px;
   vertical-align: middle;
 }
 
 .card-security-logos img.security-logo {
-  height: 25px;
+  height: 14px;
   opacity: 0.7;
 }
 
@@ -531,7 +532,7 @@ const cancelPayment = () => {
 }
 
 .upi-apps-logos img.upi-app-logo {
-  height: 30px;
+  height: 20px;
   margin-right: 5px;
 }
 
