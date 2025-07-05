@@ -1,11 +1,8 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light" style="font-family: 'Poppins', sans-serif;">
-    <!-- GIF Section (always shown) -->
     <div>
       <img :src="paymentGif" @load="handleGifLoad" ref="gifElement" class="payment-gif" />
     </div>
-
-    <!-- Success Message Section (appears below after delay) -->
     <div v-if="showMessage" class="animate__animated animate__fadeIn mt-4">
       <h2 class="text-success fw-bold">Payment Successful!</h2>
       <p class="text-muted">Thank you for your purchase.</p>

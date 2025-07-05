@@ -20,7 +20,7 @@
         <div class="bagbox px-3 rounded py-auto">
           <router-link to="/cart" class="bagbox1 d-flex">
             <div>Bag</div>
-            <div class="countbox my-auto">{{ count }}</div>
+            <div class="countbox ">{{ count }}</div>
           </router-link>
         </div>
       </div>
@@ -133,6 +133,9 @@ export default {
 }
 
 .countbox {
+  margin-top:5px ;
+  text-align: center;
+  margin-left: 2px;
   font-weight: 500;
   padding: 2px 6px;
   border-radius: 12px;
