@@ -102,13 +102,13 @@ const addToCart = () => {
     return
   }
 
-  const cart = JSON.parse(localStorage.getItem('cart')) || []
+  const cart = JSON.parse(localStorage.getItem('mycart')) || []
   const itemToAdd = {
     ...product.value,
     color: selectedColor.value,
   }
   cart.push(itemToAdd)
-  localStorage.setItem('cart', JSON.stringify(cart))
+  localStorage.setItem('mycart', JSON.stringify(cart))
   emitter.emit('custom-message', 1)
 }
 </script>

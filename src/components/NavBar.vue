@@ -8,7 +8,7 @@
         </div>
       </div>
 
-      <div class="brandname text- fs-5 f-bold">LAXMÉE</div>
+      <div class="brandname my-auto ">LAXMÉE</div>
 
       <div class="endbox d-flex gap-2 mx-4">
         <div class="searchgroup py-auto rounded d-none d-sm-flex">
@@ -20,7 +20,7 @@
         <div class="bagbox px-3 rounded py-auto">
           <router-link to="/cart" class="bagbox1 d-flex">
             <div>Bag</div>
-            <div class="countbox ">{{ count }}</div>
+            <div class="countbox my-auto">{{ count }}</div>
           </router-link>
         </div>
       </div>
@@ -93,12 +93,12 @@ export default {
   data() {
     return {
       navboxitem: [
-        { id: 1, content: "NewIn", link: "" },
+        { id: 1, content: "NewIn", link: "/" },
         { id: 2, content: "Men", link: "/about" },
         { id: 3, content: "Women", link: "/ProductWomen" },
         { id: 4, content: "Accessories", link: "/accessories" },
         { id: 5, content: "Shoes", link: "/ProductShoes" },
-        { id: 6, content: "Outlet", link: "" },
+        { id: 6, content: "Outlet", link: "/accessories" },
       ],
       count: 0,
       sidebarOpen: false,
@@ -133,9 +133,6 @@ export default {
 }
 
 .countbox {
-  margin-top:5px ;
-  text-align: center;
-  margin-left: 2px;
   font-weight: 500;
   padding: 2px 6px;
   border-radius: 12px;
@@ -165,13 +162,18 @@ export default {
 
 .brandname {
   font-family: 'Poppins', sans-serif;
-  letter-spacing: 4px;
-  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: 7px;
 }
 
 .innerbox:hover {
   background: rgb(242, 242, 242);
   cursor: pointer;
+}
+.reactbox:hover{
+  background-color: rgba(242, 242, 242, 0.637);
+  transition: 0.3s;
+
 }
 
 .endbox .searchgroup,

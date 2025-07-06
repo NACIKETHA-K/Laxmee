@@ -113,10 +113,11 @@ export default {
   display: block;
   box-shadow: 5px 5px 30px gray;
 }
-.fitting{
-
+.foreground-video-container{
+    margin-top:33px;
 
 }
+
 
 #videoCarousel {
   z-index: -1;
@@ -236,7 +237,7 @@ export default {
 
 .category-card {
   position: relative;
-  width: 700px;
+  width: 500px;
   transition: transform 0.3s;
   cursor: pointer;
 }

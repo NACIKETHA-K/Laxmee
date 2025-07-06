@@ -182,14 +182,14 @@ const addToCart = () => {
     selectedColor.value = colors[0] // default to 'black'
   }
 
-  const cart = JSON.parse(localStorage.getItem('cart')) || []
+  const cart = JSON.parse(localStorage.getItem('mycart')) || []
   const itemToAdd = {
     ...product.value,
     size: selectedSize.value,
     color: selectedColor.value,
   }
   cart.push(itemToAdd)
-  localStorage.setItem('cart', JSON.stringify(cart))
+  localStorage.setItem('mycart', JSON.stringify(cart))
   emitter.emit('custom-message', 1)
 }
 </script>

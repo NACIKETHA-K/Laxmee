@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="container py-5">
     <div class="mb-4 bag-header" style="font-family: poppins; margin-top: 60px;">[ BAG ]</div>
@@ -18,8 +20,8 @@
                   alt="Product Image"
                 />
                 <div>
-                  <div class="product-name">{{ item.name.toUpperCase() }}</div>
-                  <div class="product-variant">{{ item.color.toUpperCase() }} / {{ item.size }}</div>
+                  <div class="product-name">{{ item.name ? item.name.toUpperCase() : '' }}</div>
+                  <div class="product-variant">{{ item.color ? item.color.toUpperCase() : '' }} / {{ item.size || '' }}</div>
                   <div class="quantity-control d-flex align-items-center mt-2">
                     <button class="qty-btn " @click="decreaseQty(index)">-</button>
                     <span class="qty-display">{{ item.qty }}</span>
@@ -28,7 +30,9 @@
                 </div>
               </div>
               <div class="d-flex flex-column align-items-end">
-                <div class="product-price mb-2">R$ {{ item.price.toFixed(2).replace('.', ',') }}</div>
+                <div class="product-price mb-2">
+                  R$ {{ Number(item.price).toFixed(2).replace('.', ',') }}
+                </div>
                 <button class="remove-product-btn" @click="removeFromCart(index)">
                   Remove
                 </button>
@@ -88,8 +92,12 @@ const cartItems = ref([])
 const router = useRouter()
 
 onMounted(() => {
-  const storedCart = JSON.parse(localStorage.getItem('cart')) || []
-  cartItems.value = storedCart.map(item => ({...item, qty: item.qty || 1}))
+  const storedCart = JSON.parse(localStorage.getItem('mycart')) || []
+  cartItems.value = storedCart.map(item => ({
+    ...item,
+    qty: item.qty || 1,
+    price: Number(item.price) || 0  // Ensure price is a number
+  }))
 })
 
 const increaseQty = (index) => {
@@ -102,7 +110,7 @@ const decreaseQty = (index) => {
     cartItems.value[index].qty--
     saveCart()
   } else {
-    removeFromCart(index);
+    removeFromCart(index)
   }
 }
 
@@ -116,11 +124,13 @@ const saveCart = () => {
 }
 
 const total = computed(() =>
-  cartItems.value.reduce((sum, item) => sum + item.price * item.qty, 0)
+  cartItems.value.reduce((sum, item) => sum + Number(item.price) * item.qty, 0)
 )
 
 const payNow = () => {
   localStorage.setItem('totalPrice', total.value)
+  cartItems.value = []                   // clear cart visually
+  localStorage.setItem('mycart', '[]') 
   router.push({ name: 'cart-payment' })
 }
 </script>
